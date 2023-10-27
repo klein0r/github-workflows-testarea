@@ -17,7 +17,7 @@ jobs:
           node-version: 18
       - name: Get NPM version
         id: get_npm_version
-        run: echo "LATEST_VERSION=npm view iobroker.shelly@latest version" >> "$GITHUB_OUTPUT"
+        run: echo "LATEST_VERSION=$(npm view iobroker.shelly@latest version)" >> "$GITHUB_OUTPUT"
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
         with:
