@@ -1,0 +1,26 @@
+name: New issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  issueCreated:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.issue.pull_request }}
+    permissions:
+      issues: write
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Get NPM version
+        id: get_npm_version
+        run: echo "LATEST_VERSION=npm view iobroker.shelly@latest version" >> "$GITHUB_OUTPUT"
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Latest beta version is: **${{ steps.get_npm_version.outputs.LATEST_VERSION }}**
