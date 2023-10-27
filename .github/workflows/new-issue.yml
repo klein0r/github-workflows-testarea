@@ -23,5 +23,5 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Repo ${{ github.repository.name }} - ${{ github.repository.full_name }}
+            Repo ${{ github.event.repository.name }} - ${{ github.event.repository.full_name }}
             Latest beta version is: **${{ steps.get_npm_version.outputs.LATEST_VERSION }}**
