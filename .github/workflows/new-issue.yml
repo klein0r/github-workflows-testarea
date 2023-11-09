@@ -25,3 +25,11 @@ jobs:
           body: |
             Repo ${{ github.event.repository.name }} - ${{ github.event.repository.full_name }}
             Latest beta version is: **${{ steps.get_npm_version.outputs.LATEST_VERSION }}**
+      - name: Create beta version comment
+        if: ${{ !contains(github.event.issue.body, steps.get_npm_version.outputs.LATEST_VERSION) }}
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            It looks like you are not using the latest beta version.
+            Please upgrade your adapter to version: **${{ steps.get_npm_version.outputs.LATEST_VERSION }}**
