@@ -1,0 +1,27 @@
+name: New issue comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  issueCommentCreated:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.comment.body == 'OK' &&
+      github.event.comment.user.id == github.event.issue.user.id &&
+      !contains(github.event.issue.labels.*.name, 'confirmed')
+    permissions:
+      issues: write
+    steps:
+      - name: Add label
+        id: add_label
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["confirmed"]
+            })
