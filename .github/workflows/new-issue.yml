@@ -33,3 +33,4 @@ jobs:
           body: |
             It looks like you are not using the latest beta version.
             Please upgrade your adapter to version: **${{ steps.get_npm_version.outputs.LATEST_VERSION }}**
+            Comment with `OK` if you've checked all steps above
